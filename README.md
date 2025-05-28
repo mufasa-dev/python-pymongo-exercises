@@ -2,6 +2,8 @@
 
 This repository contains a collection of exercises developed in Python using MongoDB. These exercises were created as part of database course lessons to help understand and practice working with NoSQL databases, specifically MongoDB.
 
+![My Skills](https://skillicons.dev/icons?i=python,mongo,sublime)
+
 ## 📂 Contents
 
 - 📝 Basic CRUD operations (Create, Read, Update, Delete) in MongoDB using Python  
