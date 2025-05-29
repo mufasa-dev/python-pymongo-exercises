@@ -1,22 +1,48 @@
+import pymongo
 import os
 
+cli = pymongo.MongoClient("mongodb://localhost:27017/")
+db = cli["users_db"]
+users = db["users"]
+
 def show_users():
-    print('Lista de usuários')
+    clear_console()
+    print('-' * 30)
+    print('Lista de usuários'.center(30))
+    print('-' * 30)
+    resultados = users.find({}, {"_id": 0, "name": 1, "email": 1})
+    if resultados:
+        for x in resultados:
+            print(x)
+    else: 
+        print('Nenhum usuário encontrado')
     input()
 
 def search_user():
+    clear_console()
+    print('-' * 30)
+    print('Pesquisar usuário'.center(30))
+    print('-' * 30)
     name = input('Nome: ')
-    print('Usuário')
+    resultados = list(users.find({"name": name}, {"_id": 0, "name": 1, "email": 1}))
+    if resultados:
+        for x in resultados:
+            print(x)
+    else:
+        print('Nenhum usuário encontrado')
     input()
 
 def insert_user():
     name = input('Nome:')
     email = input('E-mail:')
+    users.insert_one({"name": name, "email": email})
+    print('Usuário inserido com sucesso')
+    input()
 
 def clear_console():
     os.system('clz' if os.name == 'nt' else 'clear')
 
-def main() :
+def main():
     while True:
         clear_console()
         print('-' * 30)
