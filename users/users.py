@@ -39,6 +39,46 @@ def insert_user():
     print('Usuário inserido com sucesso')
     input()
 
+def update_user():
+    clear_console()
+    print('-' * 30)
+    print('Alterar usuário'.center(30))
+    print('-' * 30)
+    name = input('Digite o nome: ')
+    user = users.find_one({"name": name}, {"_id": 0, "name": 1, "email": 1})
+    if user is None:
+        print('Nenhum usuário encontrado')
+        input()
+        return
+    
+    while True:
+        clear_console()
+        print("-" * 30)
+        print(f"O que deseja alterar do usuário {name}?")
+        print("-" * 30)
+        print("[1] Nome")
+        print("[2] E-mail")
+        print("[3] Voltar")
+        opt = input('Sua opção:')
+        if opt == "1":
+            newName = input("Novo nome:")
+            users.update_one({"name":name}, {"$set": {"name": newName}})
+            print("Nome alterado com sucesso")
+            input()
+            return
+        elif opt == "2":
+            newEmail = input("Novo e-mail:")
+            users.update_one({"name":name}, {"$set": {"email": newEmail}})
+            print("E-mail alterado com sucesso")
+            input()
+            return
+        elif opt == "3":
+            break
+        else: 
+            clear_console()
+            print('\033[031mOpção Inválida\033[m')
+            input()
+
 def clear_console():
     os.system('clz' if os.name == 'nt' else 'clear')
 
@@ -55,18 +95,20 @@ def main():
         print('[5] Apagar Usuário')
         print('[6] Sair')
 
-        resp = input('Sua opção:')
-        if resp == '1':
+        opt = input('Sua opção:')
+        if opt == '1':
             show_users()
-        elif resp == '2':
+        elif opt == '2':
             search_user()
-        elif resp == '3':
+        elif opt == '3':
             insert_user()
-        elif resp == '6':
+        elif opt == '4':
+            update_user()
+        elif opt == '6':
             break
         else:
             clear_console()
-            print(resp)
+            print(opt)
             print('\033[031mOpção Inválida\033[m')
             input()
 
