@@ -13,7 +13,7 @@ def show_users():
     resultados = users.find({}, {"_id": 0, "name": 1, "email": 1})
     if resultados:
         for x in resultados:
-            print(x)
+            print(f"Nome: {x['name']} E-mail: {x['email']}")
     else: 
         print('Nenhum usuário encontrado')
     input()
@@ -96,7 +96,7 @@ def delete_user():
         return
     
     clear_console()
-    confirm = input(f'Tem certeza de que deseja apagar {name}? (S,n)')
+    confirm = input(f'Tem certeza de que deseja apagar {name}? (S/n)')
     if confirm == 'S' or confirm == '':
         users.delete_one({"name": name})
 
