@@ -33,6 +33,10 @@ def search_user():
     input()
 
 def insert_user():
+    clear_console()
+    print('-' * 30)
+    print('Inserir novo usuário'.center(30))
+    print('-' * 30)
     name = input('Nome:')
     email = input('E-mail:')
     users.insert_one({"name": name, "email": email})
