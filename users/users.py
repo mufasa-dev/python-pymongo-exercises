@@ -78,6 +78,26 @@ def update_user():
             clear_console()
             print('\033[031mOpção Inválida\033[m')
             input()
+    
+def delete_user():
+    clear_console()
+    print('-' * 30)
+    print('Apagar usuário'.center(30))
+    print('-' * 30)
+    name = input('Digite o nome: ')
+    user = users.find_one({"name": name}, {"_id": 0, "name": 1, "email": 1})
+    if user is None:
+        print('Nenhum usuário encontrado')
+        input()
+        return
+    
+    clear_console()
+    confirm = input(f'Tem certeza de que deseja apagar {name}? (S,n)')
+    if confirm == 'S' or confirm == '':
+        users.delete_one({"name": name})
+
+    print("Usuário removido com sucesso")
+    input()
 
 def clear_console():
     os.system('clz' if os.name == 'nt' else 'clear')
@@ -104,6 +124,8 @@ def main():
             insert_user()
         elif opt == '4':
             update_user()
+        elif opt == '5':
+            delete_user()
         elif opt == '6':
             break
         else:
