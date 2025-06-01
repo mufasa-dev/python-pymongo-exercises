@@ -20,7 +20,27 @@ def atualizar_documento(filtro, novos_dados):
  print(f'Documentos atualizados: {resultado.modified_count}')
 
 # Operação Delete (Excluir um documento)
-def excluir_documento(filtro):
+def excluir_documento(nome):
+ print('-' * 40)
+ print('Apagar restaurante'.center(40))
+ print('-' * 40)
+ print()
+ nome = input("Nome no restaurante que deseja excluir: ")
+ restaurante = colecao.find_one({"nome": nome})
+ if restaurante is None:
+    print('Nenhum restaurante encontrado com esse nome')
+    input()
+    return
+
+ while True:
+    clear_console()
+    confirm = input(f'Tem certeza de que deseja apagar {nome}? (S/n)')
+    if confirm == 'S' or confirm == '':
+        break
+    if confirm.upper() == "N":
+        return
+    else:
+        print('\033[031mOpção Inválida\033[m')
  resultado = colecao.delete_one(filtro)
  print(f'Restaurante excluído: {resultado.deleted_count}')
 
@@ -109,13 +129,7 @@ def menu():
                 print('\033[031mOpção Inválida\033[m')
                 input()
     elif escolha == '4':
-        nome = input("Nome no restaurante que deseja excluir: ")
-        restaurante = colecao.find_one({"nome": nome})
-        if restaurante is None:
-            print('Nenhum restaurante encontrado com esse nome')
-            input()
-            return
-        excluir_documento({"nome": nome})
+        excluir_documento(nome)
     elif escolha == '5':
         clear_console()
         nome = input("Nome no restaurante que deseja avaliar: ")
