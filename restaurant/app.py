@@ -41,8 +41,21 @@ def excluir_documento(nome):
         return
     else:
         print('\033[031mOpção Inválida\033[m')
- resultado = colecao.delete_one(filtro)
+ resultado = colecao.delete_one({"nome": nome})
  print(f'Restaurante excluído: {resultado.deleted_count}')
+
+# Método para receber a nota de avaliação
+def receber_nota():
+    while True:
+        entrada = input("Digite uma nota (0 a 5): ")
+        try:
+            nota = float(entrada)
+            if nota <= 0 or nota > 5:
+                print("A nota deve estar entre 0 e 5")
+            else:
+                return nota
+        except:
+            print("Nota inválida")
 
 def clear_console():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -139,7 +152,7 @@ def menu():
             input()
             return
         nome_cliente = input("Nome do cliente:")
-        nota = input("Nota: ")
+        nota = receber_nota()
         comentario = input("Comentário: ")
         colecao.update_one({"nome": nome}, {"$push": {"avaliacoes" : {"cliente": nome_cliente, "nota": nota, "comentario": comentario}}})
         input("Avaliação incluida com sucesso!")
@@ -193,7 +206,7 @@ def menu():
                 input()
                 break
             elif opt == "2":
-                novaNota = input("Nova nota: ")
+                novaNota = receber_nota()
                 colecao.update_one({"nome":nome}, {"$set": {f"avaliacoes.{avIndex - 1}.cliente": novaNota}})
                 print("Nota alterada com sucesso")
                 input()
