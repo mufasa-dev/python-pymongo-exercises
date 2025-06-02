@@ -4,9 +4,9 @@ from pymongo import MongoClient
 # Operação Create (Criar: Inserir um documento na coleção)
 def criar_documento():
  clear_console()
- print("-" * 40)
- print("Inserir novo restaurante".center(40))
- print("-" * 40)
+ print("-" * 50)
+ print("Inserir novo restaurante".center(50))
+ print("-" * 50)
  nome = input("Nome: ")
  restaurante = colecao.find_one({"nome": nome})
  if restaurante is not None:
@@ -25,9 +25,9 @@ def criar_documento():
 # Operação Read (Ler documentos da coleção)
 def ler_documentos():
  clear_console()
- print("-" * 40)
- print("Consultar todos os restaurantes".center(40))
- print("-" * 40)
+ print("-" * 50)
+ print("Consultar todos os restaurantes".center(50))
+ print("-" * 50)
  documentos = colecao.find()
  for doc in documentos:
      print(f"Restaurante: {doc["nome"]}")
@@ -39,9 +39,9 @@ def ler_documentos():
 # Operação Update (Atualizar um documento existente)
 def atualizar_documento():
  clear_console()
- print("-" * 40)
- print("Atualizar um restaurante:".center(40))
- print("-" * 40)
+ print("-" * 50)
+ print("Atualizar um restaurante:".center(50))
+ print("-" * 50)
  nome = input('Digite o nome do restaurante que deseja alterar ')
  restaurante = colecao.find_one({"nome": nome})
  if restaurante is None:
@@ -51,9 +51,9 @@ def atualizar_documento():
 
  while True:
     clear_console()
-    print("-" * 40)
+    print("-" * 50)
     print(f"O que deseja alterar no restaurante {nome}?")
-    print("-" * 40)
+    print("-" * 50)
     print("[1] Nome")
     print("[2] Endereço")
     print("[3] Categoria")
@@ -86,9 +86,9 @@ def atualizar_documento():
 
 # Operação Delete (Excluir um documento)
 def excluir_documento():
- print('-' * 40)
- print('Apagar restaurante'.center(40))
- print('-' * 40)
+ print('-' * 50)
+ print('Apagar restaurante'.center(50))
+ print('-' * 50)
  print()
  nome = input("Nome no restaurante que deseja excluir: ")
  restaurante = colecao.find_one({"nome": nome})
@@ -98,7 +98,7 @@ def excluir_documento():
     return
 
  while True:
-    clear_console()
+    print()
     confirm = input(f'Tem certeza de que deseja apagar {nome}? (S/n)')
     if confirm == 'S' or confirm == '':
         break
@@ -112,9 +112,9 @@ def excluir_documento():
 # Método para avaliar restaurantes
 def avaliar():
     clear_console()
-    print('-' * 40)
-    print('Avaliar restaurante'.center(40))
-    print('-' * 40)
+    print('-' * 50)
+    print('Avaliar restaurante'.center(50))
+    print('-' * 50)
     print()
     nome = input("Nome no restaurante: ")
     restaurante = colecao.find_one({"nome": nome})
@@ -133,9 +133,9 @@ def avaliar():
 # Método para consultar avaliações de um restaurante
 def consultar_avaliacoes():
     clear_console()
-    print('-' * 40)
-    print('Mostrar avaliações'.center(40))
-    print('-' * 40)
+    print('-' * 50)
+    print('Mostrar avaliações'.center(50))
+    print('-' * 50)
     print()
     nome = input("Nome no restaurante que deseja consultar: ")
     restaurante = colecao.find_one({"nome": nome})
@@ -156,9 +156,9 @@ def consultar_avaliacoes():
 # Método para alterar uma avaliação de um restaurante
 def alterar_avaliacao():
     clear_console()
-    print('-' * 40)
-    print('Alterar uma avaliação'.center(40))
-    print('-' * 40)
+    print('-' * 50)
+    print('Alterar uma avaliação'.center(50))
+    print('-' * 50)
     print()
     print("Nome no restaurante que deseja alterar a avaliação: ")
     nome = input()
@@ -168,9 +168,9 @@ def alterar_avaliacao():
         print('Nenhum restaurante encontrado com esse nome')
         input()
         return   
-    print("-" * 40)
-    print(nome.center(40))
-    print("-" * 40)
+    print("-" * 50)
+    print(nome.center(50))
+    print("-" * 50)
     avaliacoes = restaurante["avaliacoes"]
     index = 0
     for a in list(avaliacoes):
@@ -183,9 +183,9 @@ def alterar_avaliacao():
 
     while True:
         clear_console()
-        print("-" * 40)
+        print("-" * 50)
         print(f"O que deseja alterar na avaliação de {avaliacao["cliente"]}?")
-        print("-" * 40)
+        print("-" * 50)
         print("[1] Nome do cliente")
         print("[2] Nota")
         print("[3] Comentário")
@@ -219,9 +219,9 @@ def alterar_avaliacao():
 # Método para apagar uma avaliação
 def apagar_avaliacao():
     clear_console()
-    print('-' * 40)
-    print('Excluir uma avaliação'.center(40))
-    print('-' * 40)
+    print('-' * 50)
+    print('Excluir uma avaliação'.center(50))
+    print('-' * 50)
     print()
     print("Nome do restaurante que deseja excluir uma avaliação: ")
     nome = input()
@@ -230,9 +230,9 @@ def apagar_avaliacao():
         print('Nenhum restaurante encontrado com esse nome')
         input()
         return   
-    print("-" * 40)
-    print(nome.center(40))
-    print("-" * 40)
+    print("-" * 50)
+    print(nome.center(50))
+    print("-" * 50)
     avaliacoes = restaurante["avaliacoes"]
     index = 0
     for a in list(avaliacoes):
@@ -269,9 +269,9 @@ def clear_console():
 def menu():
  while True:
     clear_console()
-    print("-" * 40)
-    print("Escolha uma operação".center(40))
-    print("-" * 40)
+    print("-" * 50)
+    print("Escolha uma operação".center(50))
+    print("-" * 50)
     print("1. Inserir novo restaurante")
     print("2. Consultar todos os restaurantes")
     print("3. Atualizar um restaurante")
