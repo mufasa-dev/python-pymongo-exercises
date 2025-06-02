@@ -2,22 +2,80 @@ import os
 from pymongo import MongoClient
 
 # Operação Create (Criar: Inserir um documento na coleção)
-def criar_documento(dados):
- resultado = colecao.insert_one(dados)
+def criar_documento():
+ clear_console()
+ print("-" * 40)
+ print("Inserir novo restaurante:".center(40))
+ print("-" * 40)
+ nome = input("Nome: ")
+ endereco = input("Endereço: ")
+ categoria = input("Categoria: ")
+ resultado = colecao.insert_one({"nome":nome, "endereco":endereco, "categoria": categoria, "avaliacoes": []})
+ print()
  print(f'Restaurante inserido com id: {resultado.inserted_id}')
+ input()
 
 # Operação Read (Ler documentos da coleção)
 def ler_documentos():
  clear_console()
+ print("-" * 40)
+ print("Consultar todos os restaurantes:".center(40))
+ print("-" * 40)
  documentos = colecao.find()
  for doc in documentos:
      print(f"Restaurante: {doc["nome"]}")
+     print(f"Categoria: {doc["categoria"]}")
+     print(f"Endereço: {doc["endereco"]}")
+     print()
  input()
 
 # Operação Update (Atualizar um documento existente)
 def atualizar_documento(filtro, novos_dados):
- resultado = colecao.update_one(filtro, {'$set': novos_dados})
- print(f'Documentos atualizados: {resultado.modified_count}')
+ clear_console()
+ print("-" * 40)
+ print("Atualizar um restaurante:".center(40))
+ print("-" * 40)
+ nome = input('Digite o nome do restaurante que deseja alterar: ')
+ restaurante = colecao.find_one({"nome": nome})
+ if restaurante is None:
+    print('Nenhum restaurante encontrado com esse nome')
+    input()
+    return
+
+ while True:
+    clear_console()
+    print("-" * 40)
+    print(f"O que deseja alterar no restaurante {nome}?")
+    print("-" * 40)
+    print("[1] Nome")
+    print("[2] Endereço")
+    print("[3] Categoria")
+    print("[4] Voltar")
+    opt = input('Sua opção:')
+    if opt == "1":
+        novoNome = input("Novo nome:")
+        colecao.update_one({"nome":nome}, {"$set": {"nome": colecao}})
+        print("Nome alterado com sucesso")
+        input()
+        return
+    elif opt == "2":
+        novoEndereco = input("Novo endereço:")
+        colecao.update_one({"nome":nome}, {"$set": {"endereco": novoEndereco}})
+        print("Endereço alterado com sucesso")
+        input()
+        return
+    elif opt == "3":
+        novaCategoria = input("Nova categoria:")
+        colecao.update_one({"nome":nome}, {"$set": {"categoria": novaCategoria}})
+        print("Categoria alterada com sucesso")
+        input()
+        return
+    elif opt == "4":
+        break
+    else: 
+        clear_console()
+        print('\033[031mOpção Inválida\033[m')
+        input()
 
 # Operação Delete (Excluir um documento)
 def excluir_documento(nome):
@@ -80,67 +138,11 @@ def menu():
     print()
     escolha = input("Digite o número da operação: ")
     if escolha == '1':
-        clear_console()
-        print("-" * 40)
-        print("Inserir novo restaurante:".center(40))
-        print("-" * 40)
-        nome = input("Nome: ")
-        endereco = input("Endereço: ")
-        categoria = input("Categoria: ")
-        criar_documento({"nome":nome, "endereco":endereco, "categoria": categoria, "avaliacoes": []})
-        input()
+        criar_documento()
     elif escolha == '2':
-        clear_console()
-        print("-" * 40)
-        print("Consultar todos os restaurantes:".center(40))
-        print("-" * 40)
         ler_documentos()
     elif escolha == '3':
-        clear_console()
-        print("-" * 40)
-        print("Atualizar um restaurante:".center(40))
-        print("-" * 40)
-        nome = input('Digite o nome do restaurante que deseja alterar: ')
-        restaurante = colecao.find_one({"nome": nome})
-        if restaurante is None:
-            print('Nenhum restaurante encontrado com esse nome')
-            input()
-            return
-        
-        while True:
-            clear_console()
-            print("-" * 40)
-            print(f"O que deseja alterar no restaurante {nome}?")
-            print("-" * 40)
-            print("[1] Nome")
-            print("[2] Endereço")
-            print("[3] Categoria")
-            print("[4] Voltar")
-            opt = input('Sua opção:')
-            if opt == "1":
-                novoNome = input("Novo nome:")
-                colecao.update_one({"nome":name}, {"$set": {"nome": colecao}})
-                print("Nome alterado com sucesso")
-                input()
-                return
-            elif opt == "2":
-                novoEndereco = input("Novo endereço:")
-                colecao.update_one({"nome":nome}, {"$set": {"endereco": novoEndereco}})
-                print("Endereço alterado com sucesso")
-                input()
-                return
-            elif opt == "3":
-                novaCategoria = input("Nova categoria:")
-                colecao.update_one({"nome":nome}, {"$set": {"categoria": novaCategoria}})
-                print("Categoria alterada com sucesso")
-                input()
-                return
-            elif opt == "4":
-                break
-            else: 
-                clear_console()
-                print('\033[031mOpção Inválida\033[m')
-                input()
+        atualizar_documento()
     elif escolha == '4':
         excluir_documento(nome)
     elif escolha == '5':
