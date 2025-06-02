@@ -102,7 +102,7 @@ def excluir_documento(nome):
  resultado = colecao.delete_one({"nome": nome})
  print(f'Restaurante excluído: {resultado.deleted_count}')
 
-#Método para avaliar restaurantes
+# Método para avaliar restaurantes
 def avaliar():
     clear_console()
     print('-' * 40)
@@ -123,7 +123,7 @@ def avaliar():
     print()
     input("Avaliação incluida com sucesso!")
 
-#Método para consultar avaliações de um restaurante
+# Método para consultar avaliações de um restaurante
 def consultar_avaliacoes():
     clear_console()
     print('-' * 40)
@@ -145,6 +145,69 @@ def consultar_avaliacoes():
         print(f"Comentário: {a["comentario"]}")
         print()
     input()
+
+# Método para alterar uma avaliação de um restaurante
+def alterar_avaliacao():
+    clear_console()
+    print('-' * 40)
+    print('Alterar uma avaliação'.center(40))
+    print('-' * 40)
+    print()
+    print("Nome no restaurante que deseja alterar a avaliação: ")
+    nome = input()
+    restaurante = colecao.find_one({"nome": nome})
+    if restaurante is None:
+        print()
+        print('Nenhum restaurante encontrado com esse nome')
+        input()
+        return   
+    print("-" * 40)
+    print(nome.center(40))
+    print("-" * 40)
+    avaliacoes = restaurante["avaliacoes"]
+    index = 0
+    for a in list(avaliacoes):
+        index = index + 1
+        print(f" [{index}] Cliente: {a["cliente"]} Nota: {a["nota"]} Comentário: {a["comentario"]}")
+    print()
+    avIndex = int(input("Selecione uma avaliação: "))
+    avaliacao = avaliacoes[avIndex - 1]
+    clear_console()
+
+    while True:
+        clear_console()
+        print("-" * 40)
+        print(f"O que deseja alterar na avaliação de {avaliacao["cliente"]}?")
+        print("-" * 40)
+        print("[1] Nome do cliente")
+        print("[2] Nota")
+        print("[3] Comentário")
+        print("[4] Voltar")
+        opt = input('Sua opção: ')
+        if opt == "1":
+            novoCliente = input("Novo nome: ")
+            colecao.update_one({"nome":nome}, {"$set": {f"avaliacoes.{avIndex - 1}.cliente": novoCliente}})
+            print("Nome do cliente alterado com sucesso")
+            input()
+            break
+        elif opt == "2":
+            novaNota = receber_nota()
+            colecao.update_one({"nome":nome}, {"$set": {f"avaliacoes.{avIndex - 1}.cliente": novaNota}})
+            print("Nota alterada com sucesso")
+            input()
+            break
+        elif opt == "3":
+            novoComentario = input("Novo comentário: ")
+            colecao.update_one({"nome":nome}, {"$set": {f"avaliacoes.{avIndex - 1}.comentario": novoComentario}})
+            print("Comentário alterado com sucesso")
+            input()
+            break
+        elif opt == "4":
+            break
+        else: 
+            clear_console()
+            print('\033[031mOpção Inválida\033[m')
+            input()
 
 # Método para receber a nota de avaliação
 def receber_nota():
@@ -194,61 +257,7 @@ def menu():
     elif escolha == '6':
         consultar_avaliacoes()
     elif escolha == '7':
-        clear_console()
-        nome = input("Nome no restaurante que deseja alterar a avaliação: ")
-        restaurante = colecao.find_one({"nome": nome})
-        if restaurante is None:
-            print()
-            print('Nenhum restaurante encontrado com esse nome')
-            input()
-            return   
-        print("-" * 40)
-        print(nome.center(40))
-        print("-" * 40)
-        avaliacoes = restaurante["avaliacoes"]
-        index = 0
-        for a in list(avaliacoes):
-            index = index + 1
-            print(f" [{index}] Cliente:{a["cliente"]} Nota: {a["nota"]} Comentário: {a["comentario"]}")
-        print()
-        avIndex = int(input("Selecione uma avaliação: "))
-        avaliacao = avaliacoes[avIndex - 1]
-        clear_console()
-
-        while True:
-            clear_console()
-            print("-" * 40)
-            print(f"O que deseja alterar na avaliação de {avaliacao["cliente"]}?")
-            print("-" * 40)
-            print("[1] Nome do cliente")
-            print("[2] Nota")
-            print("[3] Comentário")
-            print("[4] Voltar")
-            opt = input('Sua opção: ')
-            if opt == "1":
-                novoCliente = input("Novo nome: ")
-                colecao.update_one({"nome":nome}, {"$set": {f"avaliacoes.{avIndex - 1}.cliente": novoCliente}})
-                print("Nome do cliente alterado com sucesso")
-                input()
-                break
-            elif opt == "2":
-                novaNota = receber_nota()
-                colecao.update_one({"nome":nome}, {"$set": {f"avaliacoes.{avIndex - 1}.cliente": novaNota}})
-                print("Nota alterada com sucesso")
-                input()
-                break
-            elif opt == "3":
-                novoComentario = input("Novo comentário: ")
-                colecao.update_one({"nome":nome}, {"$set": {f"avaliacoes.{avIndex - 1}.comentario": novoComentario}})
-                print("Comentário alterado com sucesso")
-                input()
-                break
-            elif opt == "4":
-                break
-            else: 
-                clear_console()
-                print('\033[031mOpção Inválida\033[m')
-                input()
+        alterar_avaliacao()
     elif escolha == '8':
         clear_console()
         nome = input("Nome do restaurante que deseja excluir uma avaliação: ")
