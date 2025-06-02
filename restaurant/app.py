@@ -320,12 +320,15 @@ def consultar_media():
              "nome": 1,
              "media": {"$avg": "$avaliacoes.nota"}
          }
+     },
+     {
+        "$sort" : { "nome": 1 }   
      }
  ])
  for doc in documentos:
-     print(f"Restaurante: {doc["nome"]}")
+     print(f"{text_blue("Restaurante:")} {doc["nome"]}")
      if (doc["media"] is not None): 
-         print(f"Média: {doc["media"]:.2f}")
+         print(f"{text_blue("Média:")} {doc["media"]:.2f}")
      else: 
         print("Nenhuma avaliação")
      print()
