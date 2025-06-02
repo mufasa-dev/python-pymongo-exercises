@@ -123,6 +123,29 @@ def avaliar():
     print()
     input("Avaliação incluida com sucesso!")
 
+#Método para consultar avaliações de um restaurante
+def consultar_avaliacoes():
+    clear_console()
+    print('-' * 40)
+    print('Mostrar avaliações'.center(40))
+    print('-' * 40)
+    print()
+    nome = input("Nome no restaurante que deseja consultar: ")
+    restaurante = colecao.find_one({"nome": nome})
+    if restaurante is None:
+        print()
+        print('Nenhum restaurante encontrado com esse nome')
+        input()
+        consultar_avaliacoes()
+        return   
+    avaliacoes = restaurante["avaliacoes"]
+    for a in avaliacoes:
+        print(f"Cliente: {a["cliente"]}")
+        print(f"Nota: {a["nota"]}")
+        print(f"Comentário: {a["comentario"]}")
+        print()
+    input()
+
 # Método para receber a nota de avaliação
 def receber_nota():
     while True:
@@ -169,22 +192,13 @@ def menu():
     elif escolha == '5':
         avaliar()
     elif escolha == '6':
-        clear_console()
-        nome = input("Nome no restaurante que deseja consultar avaliações: ")
-        restaurante = colecao.find_one({"nome": nome})
-        if restaurante is None:
-            print('Nenhum restaurante encontrado com esse nome')
-            input()
-            return   
-        avaliacoes = restaurante["avaliacoes"]
-        for a in avaliacoes:
-            print(f"Cliente:{a["cliente"]} Nota: {a["nota"]} Comentário: {a["comentario"]}")
-        input()
+        consultar_avaliacoes()
     elif escolha == '7':
         clear_console()
         nome = input("Nome no restaurante que deseja alterar a avaliação: ")
         restaurante = colecao.find_one({"nome": nome})
         if restaurante is None:
+            print()
             print('Nenhum restaurante encontrado com esse nome')
             input()
             return   
