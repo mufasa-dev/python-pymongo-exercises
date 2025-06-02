@@ -30,9 +30,9 @@ def ler_documentos():
  print("-" * 50)
  documentos = colecao.find()
  for doc in documentos:
-     print(f"Restaurante: {doc["nome"]}")
-     print(f"Categoria: {doc["categoria"]}")
-     print(f"Endereço: {doc["endereco"]}")
+     print(f"{text_blue("Restaurante:")} {doc["nome"]}")
+     print(f"{text_blue("Categoria:")} {doc["categoria"]}")
+     print(f"{text_blue("Endereço:")} {doc["endereco"]}")
      print()
  input()
 
@@ -54,25 +54,26 @@ def atualizar_documento():
     print("-" * 50)
     print(f"O que deseja alterar no restaurante {nome}?")
     print("-" * 50)
-    print("[1] Nome")
-    print("[2] Endereço")
-    print("[3] Categoria")
-    print("[4] Voltar")
+    print(f"{text_yellow("[1]")} {text_blue("Nome")}")
+    print(f"{text_yellow("[2]")} {text_blue("Endereço")}")
+    print(f"{text_yellow("[3]")} {text_blue("Categoria")}")
+    print(f"{text_yellow("[4]")} {text_blue("Voltar")}")
     opt = input('Sua opção:')
+    print()
     if opt == "1":
-        novoNome = input("Novo nome:")
+        novoNome = input("Novo nome: ")
         colecao.update_one({"nome":nome}, {"$set": {"nome": colecao}})
         print("Nome alterado com sucesso")
         input()
         return
     elif opt == "2":
-        novoEndereco = input("Novo endereço:")
+        novoEndereco = input("Novo endereço: ")
         colecao.update_one({"nome":nome}, {"$set": {"endereco": novoEndereco}})
         print("Endereço alterado com sucesso")
         input()
         return
     elif opt == "3":
-        novaCategoria = input("Nova categoria:")
+        novaCategoria = input("Nova categoria: ")
         colecao.update_one({"nome":nome}, {"$set": {"categoria": novaCategoria}})
         print("Categoria alterada com sucesso")
         input()
@@ -81,7 +82,7 @@ def atualizar_documento():
         break
     else: 
         clear_console()
-        print('\033[031mOpção Inválida\033[m')
+        print(text_red("Opção Inválida"))
         input()
 
 # Operação Delete (Excluir um documento)
@@ -105,9 +106,10 @@ def excluir_documento():
     if confirm.upper() == "N":
         return
     else:
-        print('\033[031mOpção Inválida\033[m')
+        print(text_red("Opção Inválida"))
  resultado = colecao.delete_one({"nome": nome})
- print(f'Restaurante excluído: {resultado.deleted_count}')
+ print(f'{text_blue("Restaurantes excluídos:")} {resultado.deleted_count}')
+ input()
 
 # Método para avaliar restaurantes
 def avaliar():
@@ -147,9 +149,9 @@ def consultar_avaliacoes():
         return   
     avaliacoes = restaurante["avaliacoes"]
     for a in avaliacoes:
-        print(f"Cliente: {a["cliente"]}")
-        print(f"Nota: {a["nota"]}")
-        print(f"Comentário: {a["comentario"]}")
+        print(f"{text_blue("Cliente:")} {a["cliente"]}")
+        print(f"{text_blue("Nota:")} {a["nota"]}")
+        print(f"{text_blue("Comentário:")} {a["comentario"]}")
         print()
     input()
 
@@ -175,7 +177,7 @@ def alterar_avaliacao():
     index = 0
     for a in list(avaliacoes):
         index = index + 1
-        print(f" [{index}] Cliente: {a["cliente"]} Nota: {a["nota"]} Comentário: {a["comentario"]}")
+        print(f" [{index}] {text_blue("Cliente:")} {a["cliente"]} {text_blue("Nota:")} {a["nota"]} {text_blue("Comentário:")} {a["comentario"]}")
     print()
     avIndex = int(input("Selecione uma avaliação: "))
     avaliacao = avaliacoes[avIndex - 1]
@@ -186,10 +188,10 @@ def alterar_avaliacao():
         print("-" * 50)
         print(f"O que deseja alterar na avaliação de {avaliacao["cliente"]}?")
         print("-" * 50)
-        print("[1] Nome do cliente")
-        print("[2] Nota")
-        print("[3] Comentário")
-        print("[4] Voltar")
+        print(f"{text_yellow("[1]")} {text_blue("Nome do cliente")}")
+        print(f"{text_yellow("[2]")} {text_blue("Nota")}")
+        print(f"{text_yellow("[3]")} {text_blue("Comentário")}")
+        print(f"{text_yellow("[4]")} {text_blue("Voltar")}")
         opt = input('Sua opção: ')
         if opt == "1":
             novoCliente = input("Novo nome: ")
@@ -212,8 +214,8 @@ def alterar_avaliacao():
         elif opt == "4":
             break
         else: 
-            clear_console()
-            print('\033[031mOpção Inválida\033[m')
+            print()
+            print(text_red("Escolha inválida. Tente novamente."))
             input()
 
 # Método para apagar uma avaliação
@@ -237,7 +239,7 @@ def apagar_avaliacao():
     index = 0
     for a in list(avaliacoes):
         index = index + 1
-        print(f" [{index}] Cliente: {a["cliente"]} Nota: {a["nota"]} Comentário: {a["comentario"]}")
+        print(f" {text_yellow(f"[{index}]")} {text_blue("Cliente:")} {a["cliente"]} {text_blue("Nota:")} {a["nota"]} {text_blue("Comentário:")} {a["comentario"]}")
     print()
     avIndex = int(input("Selecione uma avaliação: "))
     avaliacao = avaliacoes[avIndex - 1]
@@ -285,6 +287,15 @@ def receber_nota():
             print("Nota inválida")
             print()
 
+def text_yellow(text):
+    return f"\033[33m{text}\033[m"
+
+def text_blue(text):
+    return f"\033[34m{text}\033[m"
+
+def text_red(text):
+    return f"\033[31m{text}\033[m"
+
 def clear_console():
     os.system('cls' if os.name == 'nt' else 'clear')
 
@@ -295,17 +306,17 @@ def menu():
     print("-" * 50)
     print("Escolha uma operação".center(50))
     print("-" * 50)
-    print("1. Inserir novo restaurante")
-    print("2. Consultar todos os restaurantes")
-    print("3. Atualizar um restaurante")
-    print("4. Excluir restaurante")
-    print("5. Avaliar restaurante")
-    print("6. Mostrar avaliações de um restaurante")
-    print("7. Alterar uma avaliação")
-    print("8. Excluir uma avaliação")
-    print("9. Mostrar média de avaliações")
-    print("10.Sair")
-    print()
+    print(f"{text_yellow("[1]")} {text_blue("Inserir novo restaurante")}")
+    print(f"{text_yellow("[2]")} {text_blue("Consultar todos os restaurantes")}")
+    print(f"{text_yellow("[3]")} {text_blue("Atualizar um restaurante")}")
+    print(f"{text_yellow("[4]")} {text_blue("Excluir restaurante")}")
+    print(f"{text_yellow("[5]")} {text_blue("Avaliar restaurante")}")
+    print(f"{text_yellow("[6]")} {text_blue("Mostrar avaliações de um restaurante")}")
+    print(f"{text_yellow("[7]")} {text_blue("Alterar uma avaliação")}")
+    print(f"{text_yellow("[8]")} {text_blue("Excluir uma avaliação")}")
+    print(f"{text_yellow("[9]")} {text_blue("Mostrar média de avaliações")}")
+    print(f"{text_yellow("[10]")}{text_blue("Sair")}")
+    print("-" * 50)
     escolha = input("Digite o número da operação: ")
     if escolha == '1':
         criar_documento()
@@ -329,7 +340,8 @@ def menu():
         clear_console()
         break
     else:
-        print("Escolha inválida. Tente novamente.")
+        print()
+        print(text_red("Escolha inválida. Tente novamente."))
         input()
 
 
