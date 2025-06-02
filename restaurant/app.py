@@ -209,9 +209,7 @@ def alterar_avaliacao():
     index = 0
     for a in list(avaliacoes):
         index = index + 1
-        print(f"{text_yellow(f"[{index}]")} {text_blue("Cliente:")} {a["cliente"]} {text_blue("Nota:")} {a["nota"]}")
-        print(f"    {text_blue("Comentário:")} {a["comentario"]}")
-        print()
+        print(f"{text_yellow(f"[{index}]")} {text_blue("Cliente:")} {a["cliente"]:27} {text_blue("Nota:")} {a["nota"]}")
     print(f"{text_yellow(f"[{index + 1}]")} {text_blue("Voltar")}")
     print("-" * 50)
     while True:
@@ -224,8 +222,8 @@ def alterar_avaliacao():
             else:
                 break
         except:
-            print()
             print(text_red("Opção inválida"))
+            print()
     
     avaliacao = avaliacoes[avIndex - 1]
     clear_console()
@@ -280,6 +278,7 @@ def apagar_avaliacao():
         print('Nenhum restaurante encontrado com esse nome')
         input()
         return   
+    clear_console()
     print("-" * 50)
     print(nome.center(50))
     print("-" * 50)
@@ -287,9 +286,21 @@ def apagar_avaliacao():
     index = 0
     for a in list(avaliacoes):
         index = index + 1
-        print(f" {text_yellow(f"[{index}]")} {text_blue("Cliente:")} {a["cliente"]} {text_blue("Nota:")} {a["nota"]} {text_blue("Comentário:")} {a["comentario"]}")
-    print()
-    avIndex = int(input("Selecione uma avaliação: "))
+        print(f"{text_yellow(f"[{index}]")} {text_blue("Cliente:")} {a["cliente"]:27} {text_blue("Nota:")} {a["nota"]}")
+    print(f"{text_yellow(f"[{index + 1}]")} {text_blue("Voltar")}")
+    print("-" * 50)
+    while True:
+        try:
+            avIndex = int(input("Selecione uma avaliação: "))
+            if avIndex == index + 1:
+                return
+            elif avIndex > (index + 1):
+                print(text_red("Opção inválida"))
+            else:
+                break
+        except:
+            print(text_red("Opção inválida"))
+            print()
     avaliacao = avaliacoes[avIndex - 1]
     clear_console()
     print(avaliacao)
