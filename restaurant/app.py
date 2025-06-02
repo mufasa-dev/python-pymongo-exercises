@@ -81,6 +81,7 @@ def atualizar_documento():
     print(f"{text_yellow("[2]")} {text_blue("Endereço")}")
     print(f"{text_yellow("[3]")} {text_blue("Categoria")}")
     print(f"{text_yellow("[4]")} {text_blue("Voltar")}")
+    print("-" * 50)
     opt = input('Sua opção:')
     print()
     if opt == "1":
@@ -110,6 +111,7 @@ def atualizar_documento():
 
 # Operação Delete (Excluir um documento)
 def excluir_documento():
+ clear_console()
  print('-' * 50)
  print('Apagar restaurante'.center(50))
  print('-' * 50)
@@ -207,9 +209,24 @@ def alterar_avaliacao():
     index = 0
     for a in list(avaliacoes):
         index = index + 1
-        print(f" [{index}] {text_blue("Cliente:")} {a["cliente"]} {text_blue("Nota:")} {a["nota"]} {text_blue("Comentário:")} {a["comentario"]}")
-    print()
-    avIndex = int(input("Selecione uma avaliação: "))
+        print(f"{text_yellow(f"[{index}]")} {text_blue("Cliente:")} {a["cliente"]} {text_blue("Nota:")} {a["nota"]}")
+        print(f"    {text_blue("Comentário:")} {a["comentario"]}")
+        print()
+    print(f"{text_yellow(f"[{index + 1}]")} {text_blue("Voltar")}")
+    print("-" * 50)
+    while True:
+        try:
+            avIndex = int(input("Selecione uma avaliação: "))
+            if avIndex == index + 1:
+                return
+            elif avIndex > (index + 1):
+                print(text_red("Opção inválida"))
+            else:
+                break
+        except:
+            print()
+            print(text_red("Opção inválida"))
+    
     avaliacao = avaliacoes[avIndex - 1]
     clear_console()
 
@@ -222,6 +239,7 @@ def alterar_avaliacao():
         print(f"{text_yellow("[2]")} {text_blue("Nota")}")
         print(f"{text_yellow("[3]")} {text_blue("Comentário")}")
         print(f"{text_yellow("[4]")} {text_blue("Voltar")}")
+        print("-" * 50)
         opt = input('Sua opção: ')
         if opt == "1":
             novoCliente = input("Novo nome: ")
