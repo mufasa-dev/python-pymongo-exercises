@@ -7,7 +7,15 @@ def criar_documento():
  print("-" * 50)
  print("Inserir novo restaurante".center(50))
  print("-" * 50)
+ 
  nome = input("Nome: ")
+ if len(nome) <= 3:
+    print()
+    print(text_red("Nome muito curto"))
+    input()
+    criar_documento()
+    return
+ 
  restaurante = colecao.find_one({"nome": nome})
  if restaurante is not None:
     print('Já existe um restaurante cadastrado com esse nome')
@@ -15,8 +23,23 @@ def criar_documento():
     criar_documento()
     return
  
- endereco = input("Endereço: ")
- categoria = input("Categoria: ")
+ while True:
+    endereco = input("Endereço: ")
+    if len(endereco) >= 3:
+        break
+    else:
+        print()
+        print(text_red("Endereço muito curto"))
+        input()
+
+ while True:
+    categoria = input("Categoria: ")
+    if len(categoria) > 0:
+        break
+    else:
+        print()
+        print(text_red("Categoria inválida"))
+        input()
  resultado = colecao.insert_one({"nome":nome, "endereco":endereco, "categoria": categoria, "avaliacoes": []})
  print()
  print(f'Restaurante inserido com id: {resultado.inserted_id}')
