@@ -8,6 +8,13 @@ def criar_documento():
  print("Inserir novo restaurante".center(40))
  print("-" * 40)
  nome = input("Nome: ")
+ restaurante = colecao.find_one({"nome": nome})
+ if restaurante is not None:
+    print('Já existe um restaurante cadastrado com esse nome')
+    input()
+    criar_documento()
+    return
+ 
  endereco = input("Endereço: ")
  categoria = input("Categoria: ")
  resultado = colecao.insert_one({"nome":nome, "endereco":endereco, "categoria": categoria, "avaliacoes": []})
@@ -30,7 +37,7 @@ def ler_documentos():
  input()
 
 # Operação Update (Atualizar um documento existente)
-def atualizar_documento(filtro, novos_dados):
+def atualizar_documento():
  clear_console()
  print("-" * 40)
  print("Atualizar um restaurante:".center(40))
