@@ -193,10 +193,17 @@ def alterar_avaliacao():
         print('Nenhum restaurante encontrado com esse nome')
         input()
         return   
+    clear_console()
     print("-" * 50)
     print(nome.center(50))
     print("-" * 50)
     avaliacoes = restaurante["avaliacoes"]
+
+    if len(avaliacoes) == 0:
+        print(text_red("O restaurante ainda não possuí avaliações"))
+        input()
+        return
+    
     index = 0
     for a in list(avaliacoes):
         index = index + 1
