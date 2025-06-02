@@ -5,7 +5,7 @@ from pymongo import MongoClient
 def criar_documento():
  clear_console()
  print("-" * 40)
- print("Inserir novo restaurante:".center(40))
+ print("Inserir novo restaurante".center(40))
  print("-" * 40)
  nome = input("Nome: ")
  endereco = input("Endereço: ")
@@ -19,7 +19,7 @@ def criar_documento():
 def ler_documentos():
  clear_console()
  print("-" * 40)
- print("Consultar todos os restaurantes:".center(40))
+ print("Consultar todos os restaurantes".center(40))
  print("-" * 40)
  documentos = colecao.find()
  for doc in documentos:
@@ -35,7 +35,7 @@ def atualizar_documento(filtro, novos_dados):
  print("-" * 40)
  print("Atualizar um restaurante:".center(40))
  print("-" * 40)
- nome = input('Digite o nome do restaurante que deseja alterar: ')
+ nome = input('Digite o nome do restaurante que deseja alterar ')
  restaurante = colecao.find_one({"nome": nome})
  if restaurante is None:
     print('Nenhum restaurante encontrado com esse nome')
@@ -102,6 +102,27 @@ def excluir_documento(nome):
  resultado = colecao.delete_one({"nome": nome})
  print(f'Restaurante excluído: {resultado.deleted_count}')
 
+#Método para avaliar restaurantes
+def avaliar():
+    clear_console()
+    print('-' * 40)
+    print('Avaliar restaurante'.center(40))
+    print('-' * 40)
+    print()
+    nome = input("Nome no restaurante: ")
+    restaurante = colecao.find_one({"nome": nome})
+    if restaurante is None:
+        print('Nenhum restaurante encontrado com esse nome')
+        input()
+        avaliar()
+        return
+    nome_cliente = input("Nome do cliente: ")
+    nota = receber_nota()
+    comentario = input("Comentário: ")
+    colecao.update_one({"nome": nome}, {"$push": {"avaliacoes" : {"cliente": nome_cliente, "nota": nota, "comentario": comentario}}})
+    print()
+    input("Avaliação incluida com sucesso!")
+
 # Método para receber a nota de avaliação
 def receber_nota():
     while True:
@@ -123,7 +144,7 @@ def menu():
  while True:
     clear_console()
     print("-" * 40)
-    print("Escolha uma operação:".center(40))
+    print("Escolha uma operação".center(40))
     print("-" * 40)
     print("1. Inserir novo restaurante")
     print("2. Consultar todos os restaurantes")
@@ -146,18 +167,7 @@ def menu():
     elif escolha == '4':
         excluir_documento(nome)
     elif escolha == '5':
-        clear_console()
-        nome = input("Nome no restaurante que deseja avaliar: ")
-        restaurante = colecao.find_one({"nome": nome})
-        if restaurante is None:
-            print('Nenhum restaurante encontrado com esse nome')
-            input()
-            return
-        nome_cliente = input("Nome do cliente:")
-        nota = receber_nota()
-        comentario = input("Comentário: ")
-        colecao.update_one({"nome": nome}, {"$push": {"avaliacoes" : {"cliente": nome_cliente, "nota": nota, "comentario": comentario}}})
-        input("Avaliação incluida com sucesso!")
+        avaliar()
     elif escolha == '6':
         clear_console()
         nome = input("Nome no restaurante que deseja consultar avaliações: ")
