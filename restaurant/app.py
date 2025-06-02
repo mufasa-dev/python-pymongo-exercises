@@ -78,7 +78,7 @@ def atualizar_documento(filtro, novos_dados):
         input()
 
 # Operação Delete (Excluir um documento)
-def excluir_documento(nome):
+def excluir_documento():
  print('-' * 40)
  print('Apagar restaurante'.center(40))
  print('-' * 40)
@@ -209,6 +209,37 @@ def alterar_avaliacao():
             print('\033[031mOpção Inválida\033[m')
             input()
 
+# Método para apagar uma avaliação
+def apagar_avaliacao():
+    clear_console()
+    print('-' * 40)
+    print('Excluir uma avaliação'.center(40))
+    print('-' * 40)
+    print()
+    print("Nome do restaurante que deseja excluir uma avaliação: ")
+    nome = input()
+    restaurante = colecao.find_one({"nome": nome})
+    if restaurante is None:
+        print('Nenhum restaurante encontrado com esse nome')
+        input()
+        return   
+    print("-" * 40)
+    print(nome.center(40))
+    print("-" * 40)
+    avaliacoes = restaurante["avaliacoes"]
+    index = 0
+    for a in list(avaliacoes):
+        index = index + 1
+        print(f" [{index}] Cliente: {a["cliente"]} Nota: {a["nota"]} Comentário: {a["comentario"]}")
+    print()
+    avIndex = int(input("Selecione uma avaliação: "))
+    avaliacao = avaliacoes[avIndex - 1]
+    clear_console()
+    print(avaliacao)
+    colecao.update_one({"nome":nome}, {"$pull": {"avaliacoes":{"nome": avaliacao["nome"]}}})  
+    print("avaliação excluída com sucesso")
+    input() 
+
 # Método para receber a nota de avaliação
 def receber_nota():
     while True:
@@ -251,7 +282,7 @@ def menu():
     elif escolha == '3':
         atualizar_documento()
     elif escolha == '4':
-        excluir_documento(nome)
+        excluir_documento()
     elif escolha == '5':
         avaliar()
     elif escolha == '6':
@@ -259,29 +290,7 @@ def menu():
     elif escolha == '7':
         alterar_avaliacao()
     elif escolha == '8':
-        clear_console()
-        nome = input("Nome do restaurante que deseja excluir uma avaliação: ")
-        restaurante = colecao.find_one({"nome": nome})
-        if restaurante is None:
-            print('Nenhum restaurante encontrado com esse nome')
-            input()
-            return   
-        print("-" * 40)
-        print(nome.center(40))
-        print("-" * 40)
-        avaliacoes = restaurante["avaliacoes"]
-        index = 0
-        for a in list(avaliacoes):
-            index = index + 1
-            print(f" [{index}] Cliente:{a["cliente"]} Nota: {a["nota"]} Comentário: {a["comentario"]}")
-        print()
-        avIndex = int(input("Selecione uma avaliação: "))
-        avaliacao = avaliacoes[avIndex - 1]
-        clear_console()
-        print(avaliacao)
-        colecao.update_one({"nome":nome}, {"$pull": {"avaliacoes":{"nome": avaliacao["nome"]}}})  
-        print("avaliação excluída com sucesso")
-        input()  
+         apagar_avaliacao()
     elif escolha == '10':
         clear_console()
         break
