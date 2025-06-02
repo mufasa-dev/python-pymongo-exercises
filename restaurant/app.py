@@ -247,6 +247,29 @@ def apagar_avaliacao():
     print("avaliação excluída com sucesso")
     input() 
 
+# Operação para trazer a média das avaliações dos restaurantes
+def consultar_media():
+ clear_console()
+ print("-" * 50)
+ print("Consultar todos os restaurantes".center(50))
+ print("-" * 50)
+ documentos = colecao.aggregate([
+     {
+         "$project": {
+             "nome": 1,
+             "media": {"$avg": "$avaliacoes.nota"}
+         }
+     }
+ ])
+ for doc in documentos:
+     print(f"Restaurante: {doc["nome"]}")
+     if (doc["media"] is not None): 
+         print(f"Média: {doc["media"]:.2f}")
+     else: 
+        print("Nenhuma avaliação")
+     print()
+ input()
+
 # Método para receber a nota de avaliação
 def receber_nota():
     while True:
@@ -300,6 +323,8 @@ def menu():
         alterar_avaliacao()
     elif escolha == '8':
          apagar_avaliacao()
+    elif escolha == '9':
+        consultar_media()
     elif escolha == '10':
         clear_console()
         break
