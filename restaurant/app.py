@@ -246,12 +246,14 @@ def receber_nota():
         entrada = input("Digite uma nota (0 a 5): ")
         try:
             nota = float(entrada)
-            if nota <= 0 or nota > 5:
+            if nota < 0 or nota > 5:
                 print("A nota deve estar entre 0 e 5")
+                print()
             else:
                 return nota
         except:
             print("Nota inválida")
+            print()
 
 def clear_console():
     os.system('cls' if os.name == 'nt' else 'clear')
