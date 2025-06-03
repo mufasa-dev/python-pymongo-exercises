@@ -120,16 +120,17 @@ def excluir_documento():
  print('Apagar restaurante'.center(50))
  print('-' * 50)
  print()
- nome = input("Nome no restaurante que deseja excluir: ")
+ nome = input(text_yellow("Nome no restaurante que deseja excluir: "))
  restaurante = colecao.find_one({"nome": nome})
  if restaurante is None:
-    print('Nenhum restaurante encontrado com esse nome')
+    print()
+    print(text_red('Nenhum restaurante encontrado com esse nome'))
     input()
     return
 
  while True:
     print()
-    confirm = input(f'Tem certeza de que deseja apagar {nome}? (S/n)')
+    confirm = input(f'{text_yellow(f"Tem certeza de que deseja apagar {nome}? (S/n) ")}')
     if confirm == 'S' or confirm == '':
         break
     if confirm.upper() == "N":
@@ -147,19 +148,19 @@ def avaliar():
     print('Avaliar restaurante'.center(50))
     print('-' * 50)
     print()
-    nome = input("Nome no restaurante: ")
+    nome = input(text_yellow("Nome no restaurante: "))
     restaurante = colecao.find_one({"nome": nome})
     if restaurante is None:
-        print('Nenhum restaurante encontrado com esse nome')
+        print(text_red('Nenhum restaurante encontrado com esse nome'))
         input()
         avaliar()
         return
-    nome_cliente = input("Nome do cliente: ")
+    nome_cliente = input(text_yellow("Nome do cliente: "))
     nota = receber_nota()
-    comentario = input("Comentário: ")
+    comentario = input(text_yellow("Comentário: "))
     colecao.update_one({"nome": nome}, {"$push": {"avaliacoes" : {"cliente": nome_cliente, "nota": nota, "comentario": comentario}}})
     print()
-    input("Avaliação incluida com sucesso!")
+    input(text_green("Avaliação incluida com sucesso!"))
 
 # Método para consultar avaliações de um restaurante
 def consultar_avaliacoes():
@@ -168,15 +169,26 @@ def consultar_avaliacoes():
     print('Mostrar avaliações'.center(50))
     print('-' * 50)
     print()
-    nome = input("Nome no restaurante que deseja consultar: ")
+    nome = input(text_yellow("Nome no restaurante que deseja consultar: "))
     restaurante = colecao.find_one({"nome": nome})
     if restaurante is None:
         print()
-        print('Nenhum restaurante encontrado com esse nome')
+        print(text_red('Nenhum restaurante encontrado com esse nome'))
         input()
-        consultar_avaliacoes()
-        return   
+        return  
+
+    clear_console()
+    print("-" * 50)
+    print(nome.center(50))
+    print("-" * 50) 
+    
     avaliacoes = restaurante["avaliacoes"]
+
+    if len(avaliacoes) == 0:
+        print(text_red("O restaurante ainda não possuí avaliações".center(50)))
+        input()
+        return
+    
     for a in avaliacoes:
         print(f"{text_blue("Cliente:")} {a["cliente"]}")
         print(f"{text_blue("Nota:")} {a["nota"]}")
@@ -196,7 +208,7 @@ def alterar_avaliacao():
     restaurante = colecao.find_one({"nome": nome})
     if restaurante is None:
         print()
-        print('Nenhum restaurante encontrado com esse nome')
+        print(text_red('Nenhum restaurante encontrado com esse nome'))
         input()
         return   
     clear_console()
@@ -206,7 +218,7 @@ def alterar_avaliacao():
     avaliacoes = restaurante["avaliacoes"]
 
     if len(avaliacoes) == 0:
-        print(text_red("O restaurante ainda não possuí avaliações"))
+        print(text_red("O restaurante ainda não possuí avaliações".center(50)))
         input()
         return
     
@@ -278,11 +290,11 @@ def apagar_avaliacao():
     print('Excluir uma avaliação'.center(50))
     print('-' * 50)
     print()
-    print("Nome do restaurante que deseja excluir uma avaliação: ")
+    print(text_yellow("Nome do restaurante que deseja excluir uma avaliação: "))
     nome = input()
     restaurante = colecao.find_one({"nome": nome})
     if restaurante is None:
-        print('Nenhum restaurante encontrado com esse nome')
+        print(text_red('Nenhum restaurante encontrado com esse nome'))
         input()
         return   
     clear_console()
@@ -290,6 +302,12 @@ def apagar_avaliacao():
     print(nome.center(50))
     print("-" * 50)
     avaliacoes = restaurante["avaliacoes"]
+
+    if len(avaliacoes) == 0:
+        print(text_red("O restaurante ainda não possuí avaliações".center(50)))
+        input()
+        return
+    
     index = 0
     for a in list(avaliacoes):
         index = index + 1
@@ -298,7 +316,7 @@ def apagar_avaliacao():
     print("-" * 50)
     while True:
         try:
-            avIndex = int(input("Selecione uma avaliação: "))
+            avIndex = int(input(text_yellow("Selecione uma avaliação: ")))
             if avIndex == index + 1:
                 return
             elif avIndex > (index + 1):
@@ -312,7 +330,8 @@ def apagar_avaliacao():
     clear_console()
     print(avaliacao)
     colecao.update_one({"nome":nome}, {"$pull": {"avaliacoes":{"nome": avaliacao["nome"]}}})  
-    print("avaliação excluída com sucesso")
+    print()
+    print(text_green("avaliação excluída com sucesso"))
     input() 
 
 # Operação para trazer a média das avaliações dos restaurantes
@@ -344,16 +363,16 @@ def consultar_media():
 # Método para receber a nota de avaliação
 def receber_nota():
     while True:
-        entrada = input("Digite uma nota (0 a 5): ")
+        entrada = input(text_yellow("Digite uma nota (0 a 5): "))
         try:
             nota = float(entrada)
             if nota < 0 or nota > 5:
-                print("A nota deve estar entre 0 e 5")
+                print(text_red("A nota deve estar entre 0 e 5"))
                 print()
             else:
                 return nota
         except:
-            print("Nota inválida")
+            print(text_red("Nota inválida"))
             print()
 
 def text_yellow(text):
@@ -378,18 +397,18 @@ def menu():
     print("-" * 50)
     print("Escolha uma operação".center(50))
     print("-" * 50)
-    print(f"{text_yellow("[1]")} {text_blue("Inserir novo restaurante")}")
-    print(f"{text_yellow("[2]")} {text_blue("Consultar todos os restaurantes")}")
-    print(f"{text_yellow("[3]")} {text_blue("Atualizar um restaurante")}")
-    print(f"{text_yellow("[4]")} {text_blue("Excluir restaurante")}")
-    print(f"{text_yellow("[5]")} {text_blue("Avaliar restaurante")}")
-    print(f"{text_yellow("[6]")} {text_blue("Mostrar avaliações de um restaurante")}")
-    print(f"{text_yellow("[7]")} {text_blue("Alterar uma avaliação")}")
-    print(f"{text_yellow("[8]")} {text_blue("Excluir uma avaliação")}")
-    print(f"{text_yellow("[9]")} {text_blue("Mostrar média de avaliações")}")
-    print(f"{text_yellow("[10]")}{text_blue("Sair")}")
+    print(f"{text_yellow("[1]")}  {text_blue("Inserir novo restaurante")}")
+    print(f"{text_yellow("[2]")}  {text_blue("Consultar todos os restaurantes")}")
+    print(f"{text_yellow("[3]")}  {text_blue("Atualizar um restaurante")}")
+    print(f"{text_yellow("[4]")}  {text_blue("Excluir restaurante")}")
+    print(f"{text_yellow("[5]")}  {text_blue("Avaliar restaurante")}")
+    print(f"{text_yellow("[6]")}  {text_blue("Mostrar avaliações de um restaurante")}")
+    print(f"{text_yellow("[7]")}  {text_blue("Alterar uma avaliação")}")
+    print(f"{text_yellow("[8]")}  {text_blue("Excluir uma avaliação")}")
+    print(f"{text_yellow("[9]")}  {text_blue("Mostrar média de avaliações")}")
+    print(f"{text_yellow("[10]")} {text_blue("Sair")}")
     print("-" * 50)
-    escolha = input("Digite o número da operação: ")
+    escolha = input(text_yellow("Digite o número da operação: "))
     if escolha == '1':
         criar_documento()
     elif escolha == '2':
