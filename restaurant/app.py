@@ -8,7 +8,7 @@ def criar_documento():
  print("Inserir novo restaurante".center(50))
  print("-" * 50)
  
- nome = input("Nome: ")
+ nome = input(text_yellow("Nome: "))
  if len(nome) <= 3:
     print()
     print(text_red("Nome muito curto"))
@@ -24,7 +24,7 @@ def criar_documento():
     return
  
  while True:
-    endereco = input("Endereço: ")
+    endereco = input(text_yellow("Endereço: "))
     if len(endereco) >= 3:
         break
     else:
@@ -33,7 +33,7 @@ def criar_documento():
         input()
 
  while True:
-    categoria = input("Categoria: ")
+    categoria = input(text_yellow("Categoria: "))
     if len(categoria) > 0:
         break
     else:
@@ -42,7 +42,7 @@ def criar_documento():
         input()
  resultado = colecao.insert_one({"nome":nome, "endereco":endereco, "categoria": categoria, "avaliacoes": []})
  print()
- print(f'Restaurante inserido com id: {resultado.inserted_id}')
+ print(f'{text_green("Restaurante inserido com id:")} {resultado.inserted_id}')
  input()
 
 # Operação Read (Ler documentos da coleção)
