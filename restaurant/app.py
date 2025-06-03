@@ -65,7 +65,8 @@ def atualizar_documento():
  print("-" * 50)
  print("Atualizar um restaurante:".center(50))
  print("-" * 50)
- nome = input('Digite o nome do restaurante que deseja alterar ')
+ print(text_yellow('Digite o nome do restaurante que deseja alterar '))
+ nome = input()
  restaurante = colecao.find_one({"nome": nome})
  if restaurante is None:
     print('Nenhum restaurante encontrado com esse nome')
@@ -77,29 +78,32 @@ def atualizar_documento():
     print("-" * 50)
     print(f"O que deseja alterar no restaurante {nome}?")
     print("-" * 50)
-    print(f"{text_yellow("[1]")} {text_blue("Nome")}")
-    print(f"{text_yellow("[2]")} {text_blue("Endereço")}")
-    print(f"{text_yellow("[3]")} {text_blue("Categoria")}")
+    print(f"{text_yellow("[1]")} {text_blue("Nome")} {nome}")
+    print(f"{text_yellow("[2]")} {text_blue("Endereço")} {restaurante["endereco"]}")
+    print(f"{text_yellow("[3]")} {text_blue("Categoria")} {restaurante["categoria"]}")
     print(f"{text_yellow("[4]")} {text_blue("Voltar")}")
     print("-" * 50)
-    opt = input('Sua opção:')
+    opt = input(text_yellow('Sua opção: '))
     print()
     if opt == "1":
-        novoNome = input("Novo nome: ")
-        colecao.update_one({"nome":nome}, {"$set": {"nome": colecao}})
-        print("Nome alterado com sucesso")
+        novoNome = input(text_yellow("Novo nome: "))
+        colecao.update_one({"nome":nome}, {"$set": {"nome": novoNome}})
+        print()
+        print(text_green("Nome alterado com sucesso"))
         input()
         return
     elif opt == "2":
-        novoEndereco = input("Novo endereço: ")
+        novoEndereco = input(text_yellow("Novo endereço: "))
         colecao.update_one({"nome":nome}, {"$set": {"endereco": novoEndereco}})
-        print("Endereço alterado com sucesso")
+        print()
+        print(text_green("Endereço alterado com sucesso"))
         input()
         return
     elif opt == "3":
-        novaCategoria = input("Nova categoria: ")
+        novaCategoria = input(text_yellow("Nova categoria: "))
         colecao.update_one({"nome":nome}, {"$set": {"categoria": novaCategoria}})
-        print("Categoria alterada com sucesso")
+        print()
+        print(text_green("Categoria alterada com sucesso"))
         input()
         return
     elif opt == "4":
@@ -353,13 +357,13 @@ def receber_nota():
             print()
 
 def text_yellow(text):
-    return f"\033[33m{text}\033[m"
+    return f"\033[93m{text}\033[m"
 
 def text_blue(text):
-    return f"\033[34m{text}\033[m"
+    return f"\033[94m{text}\033[m"
 
 def text_red(text):
-    return f"\033[31m{text}\033[m"
+    return f"\033[91m{text}\033[m"
 
 def text_green(text):
     return f"\033[92m{text}\033[m"
