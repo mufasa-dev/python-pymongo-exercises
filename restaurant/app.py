@@ -1,3 +1,7 @@
+# Bruno Ribeiro Antunes    11251405538
+# Brenno de Sousa Lemos    11222100597
+# João Victor Tigges Godoy 11231400100
+
 import os
 from pymongo import MongoClient
 
