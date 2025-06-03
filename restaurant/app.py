@@ -231,30 +231,33 @@ def alterar_avaliacao():
     while True:
         clear_console()
         print("-" * 50)
-        print(f"O que deseja alterar na avaliação de {avaliacao["cliente"]}?")
+        print(f"O que deseja alterar na avaliação de {avaliacao["cliente"]}?".center(50))
         print("-" * 50)
-        print(f"{text_yellow("[1]")} {text_blue("Nome do cliente")}")
-        print(f"{text_yellow("[2]")} {text_blue("Nota")}")
-        print(f"{text_yellow("[3]")} {text_blue("Comentário")}")
+        print(f"{text_yellow("[1]")} {text_blue("Nome do cliente")} {avaliacao["cliente"]}")
+        print(f"{text_yellow("[2]")} {text_blue("Nota")} {avaliacao["nota"]}")
+        print(f"{text_yellow("[3]")} {text_blue("Comentário")} {avaliacao["comentario"]}")
         print(f"{text_yellow("[4]")} {text_blue("Voltar")}")
         print("-" * 50)
         opt = input('Sua opção: ')
         if opt == "1":
             novoCliente = input("Novo nome: ")
             colecao.update_one({"nome":nome}, {"$set": {f"avaliacoes.{avIndex - 1}.cliente": novoCliente}})
-            print("Nome do cliente alterado com sucesso")
+            print()
+            print(text_green("Nome do cliente alterado com sucesso"))
             input()
             break
         elif opt == "2":
             novaNota = receber_nota()
             colecao.update_one({"nome":nome}, {"$set": {f"avaliacoes.{avIndex - 1}.cliente": novaNota}})
-            print("Nota alterada com sucesso")
+            print()
+            print(text_green("Nota alterada com sucesso"))
             input()
             break
         elif opt == "3":
             novoComentario = input("Novo comentário: ")
             colecao.update_one({"nome":nome}, {"$set": {f"avaliacoes.{avIndex - 1}.comentario": novoComentario}})
-            print("Comentário alterado com sucesso")
+            print()
+            print(text_green("Comentário alterado com sucesso"))
             input()
             break
         elif opt == "4":
@@ -357,6 +360,9 @@ def text_blue(text):
 
 def text_red(text):
     return f"\033[31m{text}\033[m"
+
+def text_green(text):
+    return f"\033[92m{text}\033[m"
 
 def clear_console():
     os.system('cls' if os.name == 'nt' else 'clear')
