@@ -2,6 +2,12 @@
 
 Este é um projeto em Python que permite gerenciar uma base de dados de **restaurantes** utilizando **MongoDB** como banco de dados e **PyMongo** como driver de conexão.
 
+## 👨‍🏫 Desenvolvido por
+
+- **Bruno Ribeiro Antunes**
+- **Brenno de Sousa Lemos**
+- **João Victor Tigges Godoy**
+
 ## 🔧 Funcionalidades
 
 O usuário pode, através de um menu interativo no terminal:
@@ -13,7 +19,7 @@ O usuário pode, através de um menu interativo no terminal:
 - ⭐ **Avaliar** um restaurante (adicionar avaliações)
 - 📝 **Editar** uma avaliação existente
 - ❌ **Excluir** uma avaliação
-- 🔍 **Consultar Avaliação** ver sa avaliações de um restaurante
+- 🔍 **Consultar Avaliações** de um restaurante
 - ✴️ **Mostrar média de avaliações** lista todos os restaurantes e a média de avaliações
 
 As avaliações podem conter:
@@ -68,17 +74,20 @@ As avaliações podem conter:
 3. Use o menu interativo para navegar pelas opções disponíveis:
 
    ```
-   ==== MENU ====
-   [1] Inserir novo restaurante
-   [2] Consultar todos os restaurantes
-   [3] Atualizar um restaurante
-   [4] Excluir restaurante
-   [5] Avaliar restaurante
-   [6] Mostrar avaliações de um restaurante
-   [7] Alterar uma avaliação
-   [8] Excluir uma avaliação
-   [9] Mostrar média de avaliações
-   [10]Sair
+   --------------------------------------------------
+               Escolha uma operação               
+   --------------------------------------------------
+   [1]  Inserir novo restaurante
+   [2]  Consultar todos os restaurantes
+   [3]  Atualizar um restaurante
+   [4]  Excluir restaurante
+   [5]  Avaliar restaurante
+   [6]  Mostrar avaliações de um restaurante
+   [7]  Alterar uma avaliação
+   [8]  Excluir uma avaliação
+   [9]  Mostrar média de avaliações
+   [10] Sair
+   --------------------------------------------------
    ```
 
 ---
