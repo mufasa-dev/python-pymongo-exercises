@@ -7,25 +7,22 @@ def main():
         print('-' * 50)
         print('Cadastro de pets'.center(50))
         print('-' * 50)
-        print('[1] Listar Pets')
-        print('[2] Pesquisar Pet')
-        print('[3] Cadastrar Pet')
-        print('[4] Alterar Pet')
-        print('[5] Apagar Pet')
-        print('[6] Sair')
+        print('[1] Pets')
+        print('[2] Tutores')
+        print('[3] Serviços')
+        print('[4] Consultas')
+        print('[5] Sair')
 
         opt = input('Sua opção:')
         if opt == '1':
-            pet_service.show_pets()
+            pet_service.menu()
         elif opt == '2':
-            pet_service.search_pet()
+            break
         elif opt == '3':
-            pet_service.insert_pet()
+            break
         elif opt == '4':
-            pet_service.update_pet()
+            break
         elif opt == '5':
-            pet_service.delete_pet()
-        elif opt == '6':
             break
         else:
             interface.clear_console()
