@@ -1,9 +1,9 @@
 from services import pet_service
-from utils.interface import clear_console
+from utils import interface
 
 def main():
     while True:
-        clear_console()
+        interface.clear_console()
         print('-' * 50)
         print('Cadastro de pets'.center(50))
         print('-' * 50)
@@ -28,9 +28,9 @@ def main():
         elif opt == '6':
             break
         else:
-            clear_console()
+            interface.clear_console()
             print(opt)
-            print('\033[031mOpção Inválida\033[m')
+            print(f'{interface.text_red("Opção Inválida")}')
             input()
 
 if __name__ == "__main__":
