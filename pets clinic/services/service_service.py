@@ -1,0 +1,119 @@
+from models.pet import pets
+from utils import interface
+
+def show():
+    interface.clear_console()
+    print('-' * 50)
+    print('Lista de Serviços'.center(50))
+    print('-' * 50)
+    resultados = pets.find({}, {"_id": 0, "name": 1})
+    found = False
+    for x in resultados:
+        print(f"{interface.text_blue("Nome:")} {x['name']} {interface.text_blue("Preço:")} {x['price']}")
+        found = True
+    if not found:
+        print(f'{interface.text_red('Nenhum serviço encontrado')}')
+    input()
+
+def insert():
+    interface.clear_console()
+    print('-' * 50)
+    print('Inserir novo Serviço'.center(50))
+    print('-' * 50)
+    name = input(interface.text_blue('Nome:'))
+    price = input(interface.text_blue('Preço:'))
+    pets.insert_one({"name": name, "price": price})
+    print()
+    print(interface.text_green('Serviço inserido com sucesso'))
+    input()
+
+def update():
+    interface.clear_console()
+    print('-' * 50)
+    print('Alterar Serviço'.center(50))
+    print('-' * 50)
+    name = input('Digite o nome: ')
+    user = pets.find_one({"name": name}, {"_id": 0, "name": 1})
+    if user is None:
+        print(f'{interface.text_red('Nenhum serviço encontrado')}')
+        input()
+        return
+
+    while True:
+        interface.clear_console()
+        print("-" * 50)
+        print(f"O que deseja alterar no serviço {name}?")
+        print("-" * 50)
+        print("[1] Nome")
+        print("[2] Preço")
+        print("[3] Voltar")
+        opt = input('Sua opção:')
+        if opt == "1":
+            newName = input(interface.text_blue("Novo nome:"))
+            pets.update_one({"name": name}, {"$set": {"name": newName}})
+            print("Nome alterado com sucesso")
+            input()
+            return
+        elif opt == "2":
+            newPrice = input(interface.text_blue("Novo preço:"))
+            pets.update_one({"name": name}, {"$set": {"price": newPrice}})
+            print()
+            print(interface.text_green("Preço alterado com sucesso"))
+            input()
+            return
+        elif opt == "3":
+            break
+        else:
+            interface.clear_console()
+            print(f'{interface.text_red("Opção Inválida")}')
+            input()
+
+def delete():
+    interface.clear_console()
+    print('-' * 50)
+    print('Apagar drtviço'.center(50))
+    print('-' * 50)
+    name = input('Digite o nome: ')
+    user = pets.find_one({"name": name}, {"_id": 0, "name": 1, "email": 1})
+    if user is None:
+        print(f'{interface.text_red('Nenhum serviço encontrado')}')
+        input()
+        return
+
+    interface.clear_console()
+    confirm = input(f'Tem certeza de que deseja apagar {name}? (S/n)')
+    if confirm == 'S' or confirm == '':
+        pets.delete_one({"name": name})
+        print(interface.text_green("Serviço removido com sucesso"))
+    else:
+        print(f'{interface.text_red('Ação cancelada')}')
+    input()
+
+def menu():
+    while True:
+        interface.clear_console()
+        print('-' * 50)
+        print('Serviços'.center(50))
+        print('-' * 50)
+        print('[1] Listar')
+        print('[2] Cadastrar novo')
+        print('[3] Alterar')
+        print('[4] Apagar')
+        print('[5] Voltar')
+
+        opt = input('Sua opção:')
+        if opt == '1':
+            show()
+        elif opt == '2':
+            insert()
+        elif opt == '3':
+            update()
+        elif opt == '4':
+            delete()
+        elif opt == '5':
+            break
+        else:
+            interface.clear_console()
+            print(opt)
+            print(f'{interface.text_red("Opção Inválida")}')
+            input()

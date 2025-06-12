@@ -1,4 +1,5 @@
 from services import pet_service
+from services import service_service
 from utils import interface
 
 def main():
@@ -17,7 +18,7 @@ def main():
         if opt == '1':
             pet_service.menu()
         elif opt == '2':
-            break
+            service_service.menu()
         elif opt == '3':
             break
         elif opt == '4':
