@@ -114,7 +114,8 @@ def menu():
         print(f'{interface.text_yellow("[5]")} {interface.text_blue("Apagar Pet")}')
         print(f'{interface.text_yellow("[6]")} {interface.text_blue("Sair")}')
 
-        opt = input('Sua opção:')
+        print('-' * 50)
+        opt = input(interface.text_yellow('Sua opção: '))
         if opt == '1':
             show_pets()
         elif opt == '2':

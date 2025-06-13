@@ -101,7 +101,8 @@ def menu():
         print(f'{interface.text_yellow("[4]")} {interface.text_blue("Apagar")}')
         print(f'{interface.text_yellow("[5]")} {interface.text_blue("Voltar")}')
 
-        opt = input('Sua opção:')
+        print('-' * 50)
+        opt = input(interface.text_yellow('Sua opção: '))
         if opt == '1':
             show()
         elif opt == '2':

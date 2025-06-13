@@ -6,7 +6,7 @@ def main():
     while True:
         interface.clear_console()
         print('-' * 50)
-        print('Cadastro de pets'.center(50))
+        print('Clínica de Pets'.center(50))
         print('-' * 50)
         print(f'{interface.text_yellow("[1]")} {interface.text_blue("Pets")}')
         print(f'{interface.text_yellow("[2]")} {interface.text_blue("Tutores")}')
@@ -14,7 +14,8 @@ def main():
         print(f'{interface.text_yellow("[4]")} {interface.text_blue("Consultas")}')
         print(f'{interface.text_yellow("[5]")} {interface.text_blue("Sair")}')
 
-        opt = input('Sua opção:')
+        print('-' * 50)
+        opt = input(interface.text_yellow('Sua opção: '))
         if opt == '1':
             pet_service.menu()
         elif opt == '2':
