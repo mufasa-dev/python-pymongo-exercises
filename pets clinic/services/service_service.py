@@ -1,4 +1,4 @@
-from models.pet import pets
+from models.service import service
 from utils import interface
 
 def show():
@@ -6,7 +6,7 @@ def show():
     print('-' * 50)
     print('Lista de Serviços'.center(50))
     print('-' * 50)
-    resultados = pets.find({}, {"_id": 0, "name": 1})
+    resultados = service.find({}, {"_id": 0, "name": 1})
     found = False
     for x in resultados:
         print(f"{interface.text_blue("Nome:")} {x['name']} {interface.text_blue("Preço:")} {x['price']}")
@@ -22,7 +22,7 @@ def insert():
     print('-' * 50)
     name = input(interface.text_blue('Nome:'))
     price = input(interface.text_blue('Preço:'))
-    pets.insert_one({"name": name, "price": price})
+    service.insert_one({"name": name, "price": price})
     print()
     print(interface.text_green('Serviço inserido com sucesso'))
     input()
@@ -33,7 +33,7 @@ def update():
     print('Alterar Serviço'.center(50))
     print('-' * 50)
     name = input('Digite o nome: ')
-    user = pets.find_one({"name": name}, {"_id": 0, "name": 1})
+    user = service.find_one({"name": name}, {"_id": 0, "name": 1})
     if user is None:
         print(f'{interface.text_red('Nenhum serviço encontrado')}')
         input()
@@ -50,13 +50,13 @@ def update():
         opt = input('Sua opção:')
         if opt == "1":
             newName = input(interface.text_blue("Novo nome:"))
-            pets.update_one({"name": name}, {"$set": {"name": newName}})
+            service.update_one({"name": name}, {"$set": {"name": newName}})
             print("Nome alterado com sucesso")
             input()
             return
         elif opt == "2":
             newPrice = input(interface.text_blue("Novo preço:"))
-            pets.update_one({"name": name}, {"$set": {"price": newPrice}})
+            service.update_one({"name": name}, {"$set": {"price": newPrice}})
             print()
             print(interface.text_green("Preço alterado com sucesso"))
             input()
@@ -74,7 +74,7 @@ def delete():
     print('Apagar drtviço'.center(50))
     print('-' * 50)
     name = input('Digite o nome: ')
-    user = pets.find_one({"name": name}, {"_id": 0, "name": 1, "email": 1})
+    user = service.find_one({"name": name}, {"_id": 0, "name": 1, "email": 1})
     if user is None:
         print(f'{interface.text_red('Nenhum serviço encontrado')}')
         input()
@@ -83,7 +83,7 @@ def delete():
     interface.clear_console()
     confirm = input(f'Tem certeza de que deseja apagar {name}? (S/n)')
     if confirm == 'S' or confirm == '':
-        pets.delete_one({"name": name})
+        service.delete_one({"name": name})
         print(interface.text_green("Serviço removido com sucesso"))
     else:
         print(f'{interface.text_red('Ação cancelada')}')
