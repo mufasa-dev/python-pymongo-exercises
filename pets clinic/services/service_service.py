@@ -95,11 +95,11 @@ def menu():
         print('-' * 50)
         print('Serviços'.center(50))
         print('-' * 50)
-        print('[1] Listar')
-        print('[2] Cadastrar novo')
-        print('[3] Alterar')
-        print('[4] Apagar')
-        print('[5] Voltar')
+        print(f'{interface.text_yellow("[1]")} {interface.text_blue("Listar")}')
+        print(f'{interface.text_yellow("[2]")} {interface.text_blue("Cadastrar novo")}')
+        print(f'{interface.text_yellow("[3]")} {interface.text_blue("Alterar")}')
+        print(f'{interface.text_yellow("[4]")} {interface.text_blue("Apagar")}')
+        print(f'{interface.text_yellow("[5]")} {interface.text_blue("Voltar")}')
 
         opt = input('Sua opção:')
         if opt == '1':

@@ -8,11 +8,11 @@ def main():
         print('-' * 50)
         print('Cadastro de pets'.center(50))
         print('-' * 50)
-        print('[1] Pets')
-        print('[2] Tutores')
-        print('[3] Serviços')
-        print('[4] Consultas')
-        print('[5] Sair')
+        print(f'{interface.text_yellow("[1]")} {interface.text_blue("Pets")}')
+        print(f'{interface.text_yellow("[2]")} {interface.text_blue("Tutores")}')
+        print(f'{interface.text_yellow("[3]")} {interface.text_blue("Serviços")}')
+        print(f'{interface.text_yellow("[4]")} {interface.text_blue("Consultas")}')
+        print(f'{interface.text_yellow("[5]")} {interface.text_blue("Sair")}')
 
         opt = input('Sua opção:')
         if opt == '1':

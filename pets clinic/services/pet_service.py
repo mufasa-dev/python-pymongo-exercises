@@ -107,12 +107,12 @@ def menu():
         print('-' * 50)
         print('Cadastro de pets'.center(50))
         print('-' * 50)
-        print('[1] Listar Pets')
-        print('[2] Pesquisar Pet')
-        print('[3] Cadastrar Pet')
-        print('[4] Alterar Pet')
-        print('[5] Apagar Pet')
-        print('[6] Sair')
+        print(f'{interface.text_yellow("[1]")} {interface.text_blue("Listar Pets")}')
+        print(f'{interface.text_yellow("[2]")} {interface.text_blue("Pesquisar Pet")}')
+        print(f'{interface.text_yellow("[3]")} {interface.text_blue("Cadastrar Pet")}')
+        print(f'{interface.text_yellow("[4]")} {interface.text_blue("Alterar Pet")}')
+        print(f'{interface.text_yellow("[5]")} {interface.text_blue("Apagar Pet")}')
+        print(f'{interface.text_yellow("[6]")} {interface.text_blue("Sair")}')
 
         opt = input('Sua opção:')
         if opt == '1':
