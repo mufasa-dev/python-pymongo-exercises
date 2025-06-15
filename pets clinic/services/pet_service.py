@@ -48,8 +48,8 @@ def update_pet():
     print('Alterar Pet'.center(50))
     print('-' * 50)
     name = input('Digite o nome: ')
-    user = pets.find_one({"name": name}, {"_id": 0, "name": 1})
-    if user is None:
+    pet = pets.find_one({"name": name}, {"_id": 0, "name": 1})
+    if pet is None:
         print(f'{interface.text_red('Nenhum animal encontrado')}')
         input()
         return
@@ -59,23 +59,41 @@ def update_pet():
         print("-" * 50)
         print(f"O que deseja alterar no pet {name}?")
         print("-" * 50)
-        print("[1] Nome")
-        print("[2] E-mail")
-        print("[3] Voltar")
+        print(f"{interface.text_yellow("[1]")} {interface.text_blue("Nome")}: {pet["name"]}")
+        print(f"{interface.text_yellow("[2]")} {interface.text_blue("Espécie")}: {pet["species"]}")
+        print(f"{interface.text_yellow("[3]")} {interface.text_blue("Raça")}: {pet["breed"]}")
+        print(f"{interface.text_yellow("[4]")} {interface.text_blue("Idade")}: {pet["age"]}")
+        print(f"{interface.text_yellow("[5]")} {interface.text_blue("Voltar")}")
         opt = input('Sua opção:')
         if opt == "1":
             newName = input("Novo nome:")
             pets.update_one({"name": name}, {"$set": {"name": newName}})
-            print("Nome alterado com sucesso")
+            print()
+            print(interface.text_green("Nome alterado com sucesso"))
             input()
             return
         elif opt == "2":
-            newEmail = input("Novo e-mail:")
-            pets.update_one({"name": name}, {"$set": {"email": newEmail}})
-            print("E-mail alterado com sucesso")
+            newSpecie = input(interface.text_blue("Nova espécie: "))
+            pets.update_one({"name": name}, {"$set": {"species": newSpecie}})
+            print()
+            print(interface.text_green("Espécie alterada com sucesso"))
             input()
             return
         elif opt == "3":
+            newBreed = input(interface.text_blue("Nova raça: "))
+            pets.update_one({"name": name}, {"$set": {"breed": newBreed}})
+            print()
+            print(interface.text_green("Raça alterada com sucesso"))
+            input()
+            return
+        elif opt == "4":
+            newAge = input(interface.text_blue("Nova idade: "))
+            pets.update_one({"name": name}, {"$set": {"age": newAge}})
+            print()
+            print(interface.text_green("Idade alterada com sucesso"))
+            input()
+            return
+        elif opt == "5":
             break
         else:
             interface.clear_console()
