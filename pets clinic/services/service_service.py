@@ -47,8 +47,8 @@ def update():
         print(f"O que deseja alterar no serviço {name}?")
         print("-" * 50)
         print(f"{interface.text_yellow("[1]")} {interface.text_blue("Nome")}")
-        print(f"{interface.text_yellow("[1]")} {interface.text_blue("Preço")}")
-        print(f"{interface.text_yellow("[1]")} {interface.text_blue("Voltar")}")
+        print(f"{interface.text_yellow("[2]")} {interface.text_blue("Preço")}")
+        print(f"{interface.text_yellow("[3]")} {interface.text_blue("Voltar")}")
         print("-" * 50)
         opt = input('Sua opção:')
         if opt == "1":
