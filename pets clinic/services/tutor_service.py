@@ -1,4 +1,4 @@
-from models.tutor import tutors
+from models.tutor import tutor
 from utils import interface
 
 def show_tutors():
@@ -6,7 +6,7 @@ def show_tutors():
     print('-' * 50)
     print('Lista de Tutores'.center(50))
     print('-' * 50)
-    resultados = tutors.find({}, {"_id": 0, "name": 1})
+    resultados = tutor.find({}, {"_id": 0, "name": 1})
     found = False
     for x in resultados:
         print(f"Nome: {x['name']}")
@@ -21,7 +21,7 @@ def search_tutors():
     print('Pesquisar Tutor'.center(50))
     print('-' * 50)
     name = input('Nome: ')
-    resultados = list(tutors.find({"name": name}, {"_id": 0, "name": 1, "email": 1}))
+    resultados = list(tutor.find({"name": name}, {"_id": 0, "name": 1, "email": 1}))
     if resultados:
         for x in resultados:
             print(x)
@@ -36,7 +36,7 @@ def insert_tutors():
     print('-' * 50)
     name = input('Nome:')
     email = input('E-mail:')
-    tutors.insert_one({"name": name, "email": email})
+    tutor.insert_one({"name": name, "email": email})
     print('Tutor inserido com sucesso')
     input()
 
@@ -46,7 +46,7 @@ def update_tutors():
     print('Alterar Tutor'.center(50))
     print('-' * 50)
     name = input('Digite o nome: ')
-    user = tutors.find_one({"name": name}, {"_id": 0, "name": 1})
+    user = tutor.find_one({"name": name}, {"_id": 0, "name": 1})
     if user is None:
         print(f'{interface.text_red('Nenhum tutor encontrado')}')
         input()
@@ -63,13 +63,13 @@ def update_tutors():
         opt = input('Sua opção:')
         if opt == "1":
             newName = input("Novo nome:")
-            tutors.update_one({"name": name}, {"$set": {"name": newName}})
+            tutor.update_one({"name": name}, {"$set": {"name": newName}})
             print("Nome alterado com sucesso")
             input()
             return
         elif opt == "2":
             newEmail = input("Novo e-mail:")
-            tutors.update_one({"name": name}, {"$set": {"email": newEmail}})
+            tutor.update_one({"name": name}, {"$set": {"email": newEmail}})
             print("E-mail alterado com sucesso")
             input()
             return
@@ -86,7 +86,7 @@ def delete_tutors():
     print('Apagar tutor'.center(50))
     print('-' * 50)
     name = input('Digite o nome: ')
-    user = tutors.find_one({"name": name}, {"_id": 0, "name": 1, "email": 1})
+    user = tutor.find_one({"name": name}, {"_id": 0, "name": 1, "email": 1})
     if user is None:
         print(f'{interface.text_red('Nenhum tutor encontrado')}')
         input()
@@ -95,7 +95,7 @@ def delete_tutors():
     interface.clear_console()
     confirm = input(f'Tem certeza de que deseja apagar {name}? (S/n)')
     if confirm == 'S' or confirm == '':
-        tutors.delete_one({"name": name})
+        tutor.delete_one({"name": name})
         print("Tutor removido com sucesso")
     else:
         print(f'{interface.text_red('Ação cancelada')}')
