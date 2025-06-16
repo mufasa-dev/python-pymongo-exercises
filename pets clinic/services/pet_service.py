@@ -6,10 +6,14 @@ def show_pets():
     print('-' * 50)
     print('Lista de Pets'.center(50))
     print('-' * 50)
-    resultados = pets.find({}, {"_id": 0, "name": 1})
+    resultados = pets.find({})
     found = False
     for x in resultados:
-        print(f"Nome: {x['name']}")
+        print(f"{interface.text_blue("Nome: ")} {x["name"]}")
+        print(f"{interface.text_blue("Espécie: ")} {x["species"]}")
+        print(f"{interface.text_blue("Raça: ")} {x["breed"]}")
+        print(f"{interface.text_blue("Idade: ")} {x["age"]} ano(s)")
+        print()
         found = True
     if not found:
         print(f'{interface.text_red('Nenhum animal encontrado')}')
@@ -21,10 +25,15 @@ def search_pet():
     print('Pesquisar Pet'.center(50))
     print('-' * 50)
     name = input('Nome: ')
-    resultados = list(pets.find({"name": name}, {"_id": 0, "name": 1, "email": 1}))
+    print()
+    resultados = list(pets.find({"name": name}))
     if resultados:
         for x in resultados:
-            print(x)
+            print(f"{interface.text_blue("Nome: ")} {x["name"]}")
+            print(f"{interface.text_blue("Espécie: ")} {x["species"]}")
+            print(f"{interface.text_blue("Raça: ")} {x["breed"]}")
+            print(f"{interface.text_blue("Idade: ")} {x["age"]} ano(s)")
+            print()
     else:
         print(f'{interface.text_red('Nenhum animal encontrado')}')
     input()
@@ -103,10 +112,10 @@ def update_pet():
 def delete_pet():
     interface.clear_console()
     print('-' * 50)
-    print('Apagar usuário'.center(50))
+    print('Apagar pet'.center(50))
     print('-' * 50)
-    name = input('Digite o nome: ')
-    user = pets.find_one({"name": name}, {"_id": 0, "name": 1, "email": 1})
+    name = input(interface.text_blue('Digite o nome: '))
+    user = pets.find_one({"name": name}, {"_id": 0, "name": 1})
     if user is None:
         print(f'{interface.text_red('Nenhum animal encontrado')}')
         input()
