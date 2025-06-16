@@ -6,10 +6,12 @@ def show():
     print('-' * 50)
     print('Lista de Serviços'.center(50))
     print('-' * 50)
-    resultados = service.find({}, {"_id": 0, "name": 1})
+    resultados = service.find({})
     found = False
     for x in resultados:
-        print(f"{interface.text_blue("Nome:")} {x['name']} {interface.text_blue("Preço:")} {x['price']}")
+        print(f"{interface.text_blue("Nome:")} {x['name']}")
+        print(f"{interface.text_blue("Preço:")} {x['price']}")
+        print()
         found = True
     if not found:
         print(f'{interface.text_red('Nenhum serviço encontrado')}')
@@ -20,8 +22,8 @@ def insert():
     print('-' * 50)
     print('Inserir novo Serviço'.center(50))
     print('-' * 50)
-    name = input(interface.text_blue('Nome:'))
-    price = input(interface.text_blue('Preço:'))
+    name = input(interface.text_blue('Nome: '))
+    price = input(interface.text_blue('Preço: '))
     service.insert_one({"name": name, "price": price})
     print()
     print(interface.text_green('Serviço inserido com sucesso'))
@@ -44,9 +46,10 @@ def update():
         print("-" * 50)
         print(f"O que deseja alterar no serviço {name}?")
         print("-" * 50)
-        print("[1] Nome")
-        print("[2] Preço")
-        print("[3] Voltar")
+        print(f"{interface.text_yellow("[1]")} {interface.text_blue("Nome")}")
+        print(f"{interface.text_yellow("[1]")} {interface.text_blue("Preço")}")
+        print(f"{interface.text_yellow("[1]")} {interface.text_blue("Voltar")}")
+        print("-" * 50)
         opt = input('Sua opção:')
         if opt == "1":
             newName = input(interface.text_blue("Novo nome:"))
