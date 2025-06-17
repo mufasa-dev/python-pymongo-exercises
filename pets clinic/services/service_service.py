@@ -74,7 +74,7 @@ def update():
 def delete():
     interface.clear_console()
     print('-' * 50)
-    print('Apagar drtviço'.center(50))
+    print('Apagar serviço'.center(50))
     print('-' * 50)
     name = input('Digite o nome: ')
     user = service.find_one({"name": name}, {"_id": 0, "name": 1, "email": 1})
