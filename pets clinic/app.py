@@ -1,6 +1,7 @@
 from services import (pet_service,
                       service_service,
-                      tutor_service)
+                      tutor_service,
+                      consultation_service)
 from utils import interface
 
 def main():
@@ -24,7 +25,7 @@ def main():
         elif opt == '3':
             service_service.menu()
         elif opt == '4':
-            break
+            consultation_service.menu()
         elif opt == '5':
             break
         else:
