@@ -53,11 +53,11 @@ O sistema realiza o gerenciamento de quatro entidades principais:
 │   ├── tutor_service.py
 │   ├── service_service.py
 │   └── consultation_service.py
-├── database/            # Conexão com o MongoDB
-│   └── connection.py
-├── main.py              # Menu principal de navegação
-├── README.md
-└── requirements.txt     # Dependências do projeto
+├── db.py                # Conexão com o MongoDB
+├── utils/               # Cores dos menus
+│   └── inteface.py
+├── app.py              # Menu principal de navegação
+└── README.md
 ````
 
 ---
@@ -75,7 +75,7 @@ O sistema realiza o gerenciamento de quatro entidades principais:
 1. Clone o repositório:
 
 ```bash
-git clone https://github.com/seu-usuario/nome-do-repositorio.git
+git clone https://github.com/mufasa-dev/python-pymongo-exercises.git
 cd nome-do-repositorio
 ```
 
@@ -94,7 +94,7 @@ sudo systemctl start mongod
 4. Execute o projeto:
 
 ```bash
-python3 main.py
+python3 app.py
 ```
 
 ---
